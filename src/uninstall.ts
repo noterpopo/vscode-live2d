@@ -5,7 +5,7 @@ import * as fs from 'fs';
 const base = process.cwd();
 // 文件路径
 const filePath = path.join( base, 'resources', 'app', 'out', 'vs', 'code', 'electron-browser', 'workbench', 'workbench.js' );
-const extName = "nest";
+const extName = "live2d";
 
 //执行清理
 main();

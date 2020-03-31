@@ -9,7 +9,7 @@ export class Main{
 
 		// 文件路径
 		const filePath = path.join(base, 'vs','code','electron-browser', 'workbench', 'workbench.js');
-		const extName = "nest";
+		const extName = "live2d";
 		let DomApi = new Dom(extName,filePath,version,extName);
 		return vscode.workspace.onDidChangeConfiguration(() => DomApi.install());
 	}
