@@ -38,7 +38,7 @@ export class Dom {
         // 如果是第一次加载插件，或者旧版本
         if (firstload || fileType == FileType.isOld || fileType == FileType.empty) {
             const base = path.dirname(require.main.filename);
-            copy(path.join(__dirname, '../src/assets/'), path.join(base, 'vs','code','electron-browser', 'workbench'));
+            copy(path.join(__dirname, '../resources/assets/'), path.join(base, 'vs','code','electron-browser', 'workbench'));
             this.install(true);
         }
     }
