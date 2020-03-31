@@ -3,7 +3,7 @@
 一个简单的Live2D看板娘插件，修改自[vscode-nest](https://github.com/vscode-extension/vscode-nest)项目.
 
 ## 特征
-
+![exm](https://raw.githubusercontent.com/noterpopo/vscode-live2d/master/resources/exm.png)
 
 ## 要求
 
