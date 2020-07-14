@@ -14,8 +14,12 @@ main();
 function main() {
     try {
         let content = getContent();
+        const base = path.dirname(require.main.filename);
         content = clearCssContent( content );
         saveContent( content );
+        //vscode.window.showInformationMessage(path.join(base, 'vs','code','electron-browser', 'workbench','assets'));
+        removeFiles(path.join(base, 'vs','code','electron-browser', 'workbench','js'))
+        removeFiles(path.join(base, 'vs','code','electron-browser', 'workbench','models'))
         return true;
     }
     catch ( ex ) {
@@ -52,4 +56,21 @@ function clearCssContent( content: string ): string {
 */
 function saveContent( content: string ): void {
     fs.writeFileSync( filePath, content, 'utf-8' );
+}
+
+// 删除文件内容
+function removeFiles(path:string) {
+    var files = [];
+	if(fs.existsSync(path)) {
+		files = fs.readdirSync(path);
+		files.forEach(function(file, index) {
+			var curPath = path + "/" + file;
+			if(fs.statSync(curPath).isDirectory()) { // recurse
+				removeFiles(curPath);
+			} else { // delete file
+				fs.unlinkSync(curPath);
+			}
+		});
+		fs.rmdirSync(path);
+    }
 }
