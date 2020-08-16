@@ -4,6 +4,7 @@ import FileType from './FileType';
 import * as vscode from 'vscode';
 import vsHelp from './vsHelp';
 import getNewContent from './getJs';
+import {cleanupOrigFiles, apply} from './checksum';
 
 export class Dom {
     //当前用户配置
@@ -91,6 +92,12 @@ export class Dom {
 
         this.saveContent(newContent);
         vsHelp.showInfoRestart(this.extName + ' 已更新配置，请重新启动！');
+
+
+        if(config.enabled) {
+            cleanupOrigFiles();
+            apply();
+        }
 
     }
 
