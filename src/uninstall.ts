@@ -1,6 +1,7 @@
 
 import * as path from 'path';
 import * as fs from 'fs';
+import {cleanupOrigFiles, restore} from './checksum';
 
 const base = process.cwd();
 // 文件路径
@@ -20,6 +21,10 @@ function main() {
         //vscode.window.showInformationMessage(path.join(base, 'vs','code','electron-browser', 'workbench','assets'));
         removeFiles(path.join(base, 'vs','code','electron-browser', 'workbench','js'))
         removeFiles(path.join(base, 'vs','code','electron-browser', 'workbench','models'))
+
+        cleanupOrigFiles();
+        restore();
+        
         return true;
     }
     catch ( ex ) {

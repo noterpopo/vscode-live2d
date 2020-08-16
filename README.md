@@ -34,5 +34,6 @@
 	没有这些开源项目，就不会有这个插件的出现
 * [Canvas-nest.js](https://github.com/hustcc/canvas-nest.js)
 * [live2d-widget.js](https://github.com/xiazeyu/live2d-widget.js)
+* [vscode-fix-checksums](https://github.com/lehni/vscode-fix-checksums)
 
 **Enjoy!**

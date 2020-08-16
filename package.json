@@ -91,7 +91,7 @@
     "homepage": "https://github.com/noterpopo/vscode-live2d/blob/master/README.md",
     "scripts": {
         "vscode:prepublish": "npm run compile",
-        "vscode:uninstall": "node ./out/uninstDll",
+        "vscode:uninstall": "node ./out/uninstall",
         "compile": "tsc -p ./",
         "watch": "tsc -watch -p ./",
         "postinstall": "node ./node_modules/vscode/bin/install",
