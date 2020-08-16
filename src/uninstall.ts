@@ -1,6 +1,6 @@
 import * as path from 'path';
 import * as fs from 'fs';
-import {cleanupOrigFiles, restore} from './checksum';
+// import {cleanupOrigFiles, restore} from './checksum';
 
 const base = path.dirname(require.main.filename);
 // 文件路径
@@ -13,15 +13,13 @@ main();
 //清理内容
 function main() {
     try {
-        console.log(filePath)
         let content = getContent();
         content = clearCssContent( content );
         saveContent( content );
-        console.log(content)
         removeFiles(path.join(base, 'vs','code','electron-browser', 'workbench','js'))
         removeFiles(path.join(base, 'vs','code','electron-browser', 'workbench','models'))
-        cleanupOrigFiles();
-        restore();
+        // cleanupOrigFiles();
+        // restore();
         
         return true;
     }
@@ -64,7 +62,6 @@ function saveContent( content: string ): void {
 
 // 删除文件内容
 function removeFiles(path:string) {
-    console.log(path)
     var files = [];
 	if(fs.existsSync(path)) {
 		files = fs.readdirSync(path);
