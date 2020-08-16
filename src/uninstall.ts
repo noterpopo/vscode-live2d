@@ -1,6 +1,7 @@
 import * as path from 'path';
 import * as fs from 'fs';
 // import {cleanupOrigFiles, restore} from './checksum';
+import vsHelp from './vsHelp';
 
 const base = path.dirname(require.main.filename);
 // 文件路径
@@ -13,6 +14,7 @@ main();
 //清理内容
 function main() {
     try {
+        vsHelp.showInfo("unistall is run")
         let content = getContent();
         content = clearCssContent( content );
         saveContent( content );
@@ -24,7 +26,7 @@ function main() {
         return true;
     }
     catch ( ex ) {
-        console.log(ex)
+        vsHelp.showInfo(ex)
         return false;
     }
 }
