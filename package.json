@@ -2,7 +2,7 @@
     "name": "vscode-live2d",
     "displayName": "live2D看板娘",
     "description": "使用live2D技术实现的看板娘，写代码的时候可以戳戳她",
-    "version": "0.1.8",
+    "version": "0.1.9",
     "publisher": "noterpopo",
     "engines": {
         "vscode": "^1.28.0"
