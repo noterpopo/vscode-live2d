@@ -94,10 +94,6 @@ export class Dom {
         vsHelp.showInfoRestart(this.extName + ' 已更新配置，请重新启动！');
 
 
-        if(config.enabled) {
-            cleanupOrigFiles();
-            apply();
-        }
 
     }
 
