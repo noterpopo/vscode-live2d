@@ -1,11 +1,10 @@
-
 import * as path from 'path';
 import * as fs from 'fs';
 import {cleanupOrigFiles, restore} from './checksum';
 
-const base = process.cwd();
+const base = path.dirname(require.main.filename);
 // 文件路径
-const filePath = path.join( base, 'resources', 'app', 'out', 'vs', 'code', 'electron-browser', 'workbench', 'workbench.js' );
+const filePath = path.join(base, 'vs','code','electron-browser', 'workbench', 'workbench.js');
 const extName = "live2d";
 
 //执行清理
@@ -14,20 +13,20 @@ main();
 //清理内容
 function main() {
     try {
+        console.log(filePath)
         let content = getContent();
-        const base = path.dirname(require.main.filename);
         content = clearCssContent( content );
         saveContent( content );
-        //vscode.window.showInformationMessage(path.join(base, 'vs','code','electron-browser', 'workbench','assets'));
+        console.log(content)
         removeFiles(path.join(base, 'vs','code','electron-browser', 'workbench','js'))
         removeFiles(path.join(base, 'vs','code','electron-browser', 'workbench','models'))
-
         cleanupOrigFiles();
         restore();
         
         return true;
     }
     catch ( ex ) {
+        console.log(ex)
         return false;
     }
 }
@@ -65,6 +64,7 @@ function saveContent( content: string ): void {
 
 // 删除文件内容
 function removeFiles(path:string) {
+    console.log(path)
     var files = [];
 	if(fs.existsSync(path)) {
 		files = fs.readdirSync(path);

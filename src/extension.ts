@@ -4,6 +4,7 @@
 import * as vscode from 'vscode';
 import { Main } from './Main';
 import {cleanupOrigFiles, apply} from './checksum';
+import {checkFirstload} from './Dom'
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -18,8 +19,10 @@ export function activate(context: vscode.ExtensionContext) {
         // Display a message box to the user
         vscode.window.showInformationMessage('Hello live2d!');
     });
-    cleanupOrigFiles();
-    apply();
+    if(checkFirstload()){
+        cleanupOrigFiles();
+        apply();
+    }
     context.subscriptions.push(disposable);
     context.subscriptions.push(Main.watch());
 }
