@@ -1,7 +1,6 @@
 import * as path from 'path';
 import * as fs from 'fs';
-// import {cleanupOrigFiles, restore} from './checksum';
-import vsHelp from './vsHelp';
+import * as vscode from 'vscode';
 
 const base = path.dirname(require.main.filename);
 // 文件路径
@@ -14,19 +13,16 @@ main();
 //清理内容
 function main() {
     try {
-        vsHelp.showInfo("unistall is run")
+        vscode.window.showInformationMessage("扩展残留文件已清除")
         let content = getContent();
         content = clearCssContent( content );
         saveContent( content );
         removeFiles(path.join(base, 'vs','code','electron-browser', 'workbench','js'))
         removeFiles(path.join(base, 'vs','code','electron-browser', 'workbench','models'))
-        // cleanupOrigFiles();
-        // restore();
         
         return true;
     }
     catch ( ex ) {
-        vsHelp.showInfo(ex)
         return false;
     }
 }

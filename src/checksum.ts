@@ -11,17 +11,10 @@ const productFile = path.join(rootDir, 'product.json')
 const origFile = `${productFile}.orig.${vscode.version}`
 
 
-const messages = {
-  changed: verb => `Checksums ${verb}. Please restart VSCode to see effect.`,
-  unchanged: 'No changes to checksums were necessary.',
-  error: `An error occurred during execution.
-Make sure you have write access rights to the VSCode files, see README`
-}
 
 export function apply() {
   const product = require(productFile)
   let changed = false
-  let message = messages.unchanged
   for (const [filePath, curChecksum] of (<any>Object).entries(product.checksums)) {
     const checksum = computeChecksum(path.join(appDir, ...filePath.split('/')))
     if (checksum !== curChecksum) {
@@ -36,28 +29,21 @@ export function apply() {
         fs.renameSync(productFile, origFile)
       }
       fs.writeFileSync(productFile, json, { encoding: 'utf8' })
-      message = messages.changed('applied')
     } catch (err) {
       console.error(err)
-      message = messages.error
     }
   }
-  vscode.window.showInformationMessage(message)
 }
 
 export function restore() {
-  let message = messages.unchanged
   try {
     if (fs.existsSync(origFile)) {
       fs.unlinkSync(productFile)
       fs.renameSync(origFile, productFile)
-      message = messages.changed('restored')
     }
   } catch (err) {
     console.error(err)
-    message = messages.error
   }
-  vscode.window.showInformationMessage(message)
 }
 
 function computeChecksum(file) {
