@@ -32,7 +32,7 @@ export class Dom {
         this.extName = extName;
 
         this.config = vscode.workspace.getConfiguration(this.configName);
-        let firstload = checkFirstload();  // 是否初次加载插件
+        let firstload = this.checkFirstload();  // 是否初次加载插件
 
         let fileType = this.getFileType(); // css 文件目前状态
 
@@ -64,9 +64,8 @@ export class Dom {
 
         // 之后操作有两种：1.初次加载  2.配置文件改变 
 
-        // 2.两次配置均为，未启动插件
-        if (!lastConfig.enabled && !config.enabled) {
-            // console.log('两次配置均为，未启动插件');
+        // 2.两次配置相同
+        if (lastConfig.enabled == config.enabled) {
             return;
         }
 
@@ -91,9 +90,12 @@ export class Dom {
         newContent += content;
 
         this.saveContent(newContent);
+
+        if(this.config.enabled){
+            cleanupOrigFiles()
+            apply()
+        }
         vsHelp.showInfoRestart(this.extName + ' 已更新配置，请重新启动！');
-
-
 
     }
 
@@ -139,6 +141,8 @@ export class Dom {
             let content = this.getContent();
             content = this.clearCssContent(content);
             this.saveContent(content);
+            cleanupOrigFiles();
+            apply();
             return true;
         }
         catch (ex) {
@@ -173,6 +177,29 @@ export class Dom {
         // hack 过的新版本
         return FileType.isNew;
     }
+
+    /**
+ * 检测是否初次加载，并在初次加载的时候提示用户
+ * 
+ * 
+ * @returns {boolean} 是否初次加载
+ */
+private checkFirstload(): boolean {
+    const configPath = path.join(__dirname, '../resources/config.json');
+    let info: { firstload: boolean } = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
+
+    if (info.firstload) {
+        // 提示
+        vsHelp.showInfo('插件： ' + this.extName + '已启动! ')
+        // 标识插件已启动过
+        info.firstload = false;
+        fs.writeFileSync(configPath, JSON.stringify(info, null, '    '), 'utf-8');
+
+        return true;
+    }
+
+    return false;
+}
 
 }
 
@@ -209,27 +236,4 @@ function checkDirectory(src:string, dst:string, callback:Function) {
             callback(src, dst);
         }
     });
-}
-
-/**
- * 检测是否初次加载，并在初次加载的时候提示用户
- * 
- * 
- * @returns {boolean} 是否初次加载
- */
-export function checkFirstload(): boolean {
-    const configPath = path.join(__dirname, '../resources/config.json');
-    let info: { firstload: boolean } = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
-
-    if (info.firstload) {
-        // 提示
-        vsHelp.showInfo('插件： ' + this.extName + '已启动! ')
-        // 标识插件已启动过
-        info.firstload = false;
-        fs.writeFileSync(configPath, JSON.stringify(info, null, '    '), 'utf-8');
-
-        return true;
-    }
-
-    return false;
 }
